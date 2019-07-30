@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateTagsTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'users';
+    public $tableName = 'tags';
 
     /**
      * Run the migrations.
-     * @table users
+     * @table tags
      *
      * @return void
      */
@@ -23,11 +23,8 @@ class CreateUsersTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
-            $table->string('name')->nullable();
-            $table->string('email', 255)->unique();
-            $table->string('password');
+            $table->string('name');
             $table->timestamps();
-            $table->rememberToken();
         });
     }
 

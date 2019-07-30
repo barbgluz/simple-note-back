@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateNotebooksTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'users';
+    public $tableName = 'notebooks';
 
     /**
      * Run the migrations.
-     * @table users
+     * @table notebooks
      *
      * @return void
      */
@@ -23,11 +23,17 @@ class CreateUsersTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
-            $table->string('name')->nullable();
-            $table->string('email', 255)->unique();
-            $table->string('password');
+            $table->string('name');
+            $table->integer('users_id')->unsigned();
             $table->timestamps();
-            $table->rememberToken();
+
+            $table->index('users_id');
+
+
+            $table->foreign('users_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 
