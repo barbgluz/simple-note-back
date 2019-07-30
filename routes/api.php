@@ -34,3 +34,8 @@ Route::group([
     });
 
 });
+
+Route::resource('users', 'UserController');
+Route::resource('notebooks', 'NotebookController');
+Route::resource('notes', 'NoteController');
+Route::resource('tags', 'TagController');
