@@ -39,3 +39,4 @@ Route::resource('users', 'UserController');
 Route::resource('notebooks', 'NotebookController');
 Route::resource('notes', 'NoteController');
 Route::resource('tags', 'TagController');
+Route::get('notebook/{id}', 'NoteController@notebook');

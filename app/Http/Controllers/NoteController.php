@@ -95,4 +95,16 @@ class NoteController extends Controller
             return new NoteResource($note);
         }
     }
+
+    /**
+     * Return the specified notebook notes
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function notebook($id)
+    {
+        $notes = Note::where('notebooks_id', $id)->get();
+        return new NoteResource($notes);
+    }
 }
