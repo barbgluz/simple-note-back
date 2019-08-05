@@ -40,8 +40,9 @@ class NoteController extends Controller
     public function store(Request $request)
     {
         $note = $request->isMethod('put') ? Note::findOrFail($request->id) : new Note;
-        $note->name = $request->input('name');
-        $note->email = $request->input('email');
+        $note->title = $request->input('title');
+        $note->description = $request->input('description');
+        $note->notebooks_id = $request->input('notebooks_id');
         if($note->save()) {
             return new NoteResource($note);
         }
@@ -79,7 +80,12 @@ class NoteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $note = Note::findOrFail($id);
+        $note->title = $request->input('title');
+        $note->description = $request->input('description');
+        if($note->save()) {
+            return new NoteResource($note);
+        }
     }
 
     /**

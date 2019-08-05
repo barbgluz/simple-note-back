@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Notebook;
+use App\User;
 use App\Http\Resources\Notebook as NotebookResource;
+use App\Http\Controllers\AuthController as Auth;
 
 class NotebookController extends Controller
 {
@@ -14,9 +16,12 @@ class NotebookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $notebooks = Notebook::paginate(15);
+
+        $id = $request->user('api')->id;
+
+        $notebooks = Notebook::where('users_id', $id)->paginate(15);
 
         return NotebookResource::collection($notebooks);
     }
@@ -39,9 +44,10 @@ class NotebookController extends Controller
      */
     public function store(Request $request)
     {
-        $notebook = $request->isMethod('put') ? Notebook::findOrFail($request->id) : new Notebook;
+        $notebook = new Notebook;
         $notebook->name = $request->input('name');
-        $notebook->email = $request->input('email');
+        $notebook->users_id = $request->user('api')->id;
+
         if($notebook->save()) {
             return new NotebookResource($notebook);
         }
@@ -79,7 +85,11 @@ class NotebookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $notebook = Notebook::findOrFail($id);
+        $notebook->name = $request->input('name');
+        if($notebook->save()) {
+            return new NotebookResource($notebook);
+        }
     }
 
     /**

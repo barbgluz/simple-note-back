@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group([
-    'prefix' => 'auth'
+    'prefix' => ''
 
 ], function () {
     Route::post('login', 'AuthController@login');
@@ -30,13 +30,12 @@ Route::group([
     ], function() {
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
-
+        Route::resource('notebooks', 'NotebookController');
+        Route::resource('users', 'UserController');
+        Route::resource('notes', 'NoteController');
+        Route::resource('tags', 'TagController');
+        Route::get('notebook/{id}', 'NoteController@notebook');
     });
 
 });
 
-Route::resource('users', 'UserController');
-Route::resource('notebooks', 'NotebookController');
-Route::resource('notes', 'NoteController');
-Route::resource('tags', 'TagController');
-Route::get('notebook/{id}', 'NoteController@notebook');

@@ -11,6 +11,6 @@ class NotebooksTableSeeder extends Seeder
      */
     public function run()
     {
-      factory(App\Notebook::class, 15)->create();
+      factory(App\Notebook::class, 150)->create();
     }
 }
